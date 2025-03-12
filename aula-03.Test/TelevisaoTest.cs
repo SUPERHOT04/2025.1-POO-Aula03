@@ -8,13 +8,13 @@ public class TelevisaoTest
     [TestMethod]
     public void Dado_Tamanho_21_Deve_Retornar_Excecao()
     {
-        Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Televisao(21f), $"O tamanho(21) n„o È suportado!");
+        Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Televisao(21f), $"O tamanho(21) n√£o √© suportado!");
     }
 
     [TestMethod]
     public void Dado_Tamanho_81_Deve_Retornar_Excecao()
     {
-        Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Televisao(81f), $"O tamanho(81) n„o È suportado!");
+        Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Televisao(81f), $"O tamanho(81) n√£o √© suportado!");
     }
 
     [TestMethod]
@@ -101,21 +101,112 @@ public class TelevisaoTest
         Assert.AreEqual(0, televisao.Volume);
     }
 
+   [TestMethod]
+public void Deve_Manter_Mudo_Ao_Tentar_Alterar_Volume()
+{
+    
+    Televisao televisao = new Televisao(25f);
+    const int volumeInicial = 25;  
+
+  
+    televisao.AlternarModoMudo();
+    
+ 
+    televisao.AumentarVolume();
+    
+  
+    Assert.AreEqual(0, televisao.Volume);
+    
+    televisao.AlternarModoMudo();
+    
+    Assert.AreEqual(volumeInicial, televisao.Volume);
+}
+
+
+    [TestClass]
+public class TelevisaoTest
+{
     [TestMethod]
-    public void Deve_Manter_Mudo_Ao_Tentar_Alterar_Volume()
+    public void Deve_Aumentar_Canal()
     {
+       
         Televisao televisao = new Televisao(25f);
-        const int volumeInicial = 10;
-
-        televisao.AlternarModoMudo();
-        televisao.AumentarVolume();
-
-        Assert.AreEqual(0, televisao.Volume);
-
-        televisao.AlternarModoMudo();
-        Assert.AreEqual(volumeInicial, televisao.Volume);
+        
+      
+        televisao.AumentarCanal();
+        
+       
+        Assert.AreEqual(2, televisao.CanalAtual);
     }
 
+    [TestMethod]
+    public void Deve_Diminuir_Canal()
+    {
+        
+        Televisao televisao = new Televisao(25f);
 
+       
+        televisao.SelecionarCanal(5);
+
+      
+        televisao.DiminuirCanal();
+        
+       
+        Assert.AreEqual(4, televisao.CanalAtual);
+    }
+
+    [TestMethod]
+    public void Nao_Deve_Diminuir_Canal_Abaixo_Do_Minimo()
+    {
+        
+        Televisao televisao = new Televisao(25f);
+        
+      
+        televisao.DiminuirCanal();
+        
+      
+        Assert.AreEqual(1, televisao.CanalAtual);
+    }
+
+    [TestMethod]
+    public void Deve_Selecionar_Canal_Pelo_Numero()
+    {
+     
+        Televisao televisao = new Televisao(25f);
+        
     
+        televisao.SelecionarCanal(505);
+        
+       
+        Assert.AreEqual(505, televisao.CanalAtual);
+    }
+
+    [TestMethod]
+    public void Nao_Deve_Selecionar_Canal_Se_Numero_For_Invalido()
+    {
+       
+        Televisao televisao = new Televisao(25f);
+        
+ 
+        televisao.SelecionarCanal(1000);
+        
+      
+        Assert.AreEqual(1, televisao.CanalAtual);
+    }
+
+    [TestMethod]
+    public void Deve_Aumentar_Canal_At√©_Maximo()
+    {
+       
+        Televisao televisao = new Televisao(25f);
+        
+       
+        televisao.SelecionarCanal(999);
+        
+     
+        televisao.AumentarCanal();
+        
+     
+        Assert.AreEqual(999, televisao.CanalAtual);
+    }
 }
